@@ -1,7 +1,7 @@
 """
 For each number 'a' check if we've seen (2020 - a) yet
 """
-def solve_double(nums):
+def solve_double(nums: list[int]):
     seen = {}
     for a in nums:
         # Check if we've seen its partner number before
@@ -18,7 +18,7 @@ a pair (a,b) that has a matching single c that brings the total to 2020
 
 Extending the logic from 1A slightly leads to an O(n^2) solution
 """
-def solve_triple(nums):
+def solve_triple(nums: list[int]):
 # really just using functions so I can break out of both loops
     seen = {}
     for i, a in enumerate(nums):
