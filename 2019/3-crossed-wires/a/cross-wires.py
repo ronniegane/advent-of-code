@@ -22,7 +22,7 @@ def pretty_print(grid: List[List[int]]):
 # test3 distance 135
 
 
-with open('test1', 'r') as fp:
+with open('test2', 'r') as fp:
     first_commands = fp.readline().split(',')
     grid = [[0]]
     current_x = 0
@@ -70,6 +70,9 @@ with open('test1', 'r') as fp:
     current_y = 0
     min_dist = 10000000
     min_coords = [0, 0]
+
+    # Reset the central port so we don't mark it as a crossover
+    grid[0][0] = 8
 
     print('\nDrawing second circuit:')
     # At each step check for overlaps and keep track of the closest overlap seen so far
