@@ -50,7 +50,7 @@ def validate_height(hgt: str):
         if unit == 'cm':
             return value >= 150 and value <= 193
         elif unit == 'in':
-            return value >= 59 and value <= 2030
+            return value >= 59 and value <= 76
         return False
     except:
         return False
