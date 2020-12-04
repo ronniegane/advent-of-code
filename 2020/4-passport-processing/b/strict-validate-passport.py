@@ -21,6 +21,10 @@ Issues encountered:
 1. Height value 92 (no unit suffix) - causes error
   Solution - could wrap in try/except, seems a little clunky but will catch all possible problems
   Should then probably also apply try/except to all validation functions
+2. Duplicated fields passing a simple count - because we only count that there are 7 valid fields, a
+  valid passport could be just the "pid" key seven times over.
+  Solution - add fields to a set and check for size 7?
+3. Not encountered but if there are invalid keys the map lookup will show errors. May want to try/except here.
 """
 import re
 
@@ -98,16 +102,16 @@ for passport in passports:
     # Fields will be an array [[key, value], [key, value]]
     fields = [x.split(':') for x in passport.split()]
     print(fields)
-    valid_fields = 0
+    valid_fields = set()
     for field in fields:
         # Need to handle cid optional case
         if field[0] != 'cid':
             # Python doesn't have switch statements so we use a map instead
             if rules_switch[field[0]](field[1]):
-                valid_fields += 1
+                valid_fields.add(field[0])
             else:
                 break  # Fail early if we find one invalid field
-    if valid_fields == 7:
+    if len(valid_fields) == 7:
         valid_passports += 1
 
 print(valid_passports)
