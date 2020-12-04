@@ -16,11 +16,15 @@ cid (Country ID)
 
 Passport data is broken over a random number of lines,
 but not broken in the middle of a value
+
+Issues encountered:
+1. Height value 92 (no unit suffix) - causes error
+  Solution - could wrap in try/except, seems a little clunky but will catch all possible problems
+  Should then probably also apply try/except to all validation functions
 """
 import re
 
 # Validation functions
-# Will probably fail if not given valid integer strings
 
 
 def validate_birth_year(byr: str):
@@ -36,13 +40,16 @@ def validate_expiration_year(eyr: str):
 
 
 def validate_height(hgt: str):
-    unit = hgt[-2:]
-    value = int(hgt[:-2])
-    if unit == 'cm':
-        return value >= 150 and value <= 193
-    elif unit == 'in':
-        return value >= 59 and value <= 2030
-    return False
+    try:
+        unit = hgt[-2:]
+        value = int(hgt[:-2])
+        if unit == 'cm':
+            return value >= 150 and value <= 193
+        elif unit == 'in':
+            return value >= 59 and value <= 2030
+        return False
+    except:
+        return False
 
 
 hair_color_pattern = re.compile('^#[0-9a-f]{6}')
