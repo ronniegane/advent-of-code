@@ -30,7 +30,7 @@ def pretty_print(grid: List[List[int]]):
 # test3 distance 135
 
 
-path = (Path(__file__).parent / "./input").resolve()
+path = (Path(__file__).parent / ".././input").resolve()
 with open(path, 'r') as fp:
     first_commands = fp.readline().split(',')
     grid = {}
