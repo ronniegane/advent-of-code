@@ -30,7 +30,7 @@ def pretty_print(grid: List[List[int]]):
 # test3 distance 135
 
 
-path = (Path(__file__).parent / "./test2").resolve()
+path = (Path(__file__).parent / "./input").resolve()
 with open(path, 'r') as fp:
     first_commands = fp.readline().split(',')
     grid = {}
@@ -87,7 +87,7 @@ with open(path, 'r') as fp:
                     grid["%d,%d" % (x, current_y)] = 2
                 elif grid["%d,%d" % (x, current_y)] == 1:
                     grid["%d,%d" % (x, current_y)] = 3
-                    dist_to_home = x + current_y
+                    dist_to_home = abs(x) + abs(current_y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
                         min_coords = [x, current_y]
@@ -98,7 +98,7 @@ with open(path, 'r') as fp:
                     grid["%d,%d" % (x, current_y)] = 2
                 elif grid["%d,%d" % (x, current_y)] == 1:
                     grid["%d,%d" % (x, current_y)] = 3
-                    dist_to_home = x + current_y
+                    dist_to_home = abs(x) + abs(current_y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
                         min_coords = [x, current_y]
@@ -109,7 +109,7 @@ with open(path, 'r') as fp:
                     grid["%d,%d" % (current_x, y)] = 2
                 elif grid["%d,%d" % (current_x, y)] == 1:
                     grid["%d,%d" % (current_x, y)] = 3
-                    dist_to_home = current_x + y
+                    dist_to_home = abs(current_x) + abs(y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
                         min_coords = [current_x, y]
@@ -120,7 +120,7 @@ with open(path, 'r') as fp:
                     grid["%d,%d" % (current_x, y)] = 2
                 elif grid["%d,%d" % (current_x, y)] == 1:
                     grid["%d,%d" % (current_x, y)] = 3
-                    dist_to_home = current_x + y
+                    dist_to_home = abs(current_x) + abs(y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
                         min_coords = [current_x, y]
