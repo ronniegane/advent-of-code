@@ -12,6 +12,7 @@
 # for each edge in the second wire
 
 from typing import List
+from pathlib import Path
 
 
 def pretty_print(grid: List[List[int]]):
@@ -21,8 +22,8 @@ def pretty_print(grid: List[List[int]]):
 # test2 distance 159
 # test3 distance 135
 
-
-with open('test2', 'r') as fp:
+path = (Path(__file__).parent / "./test").resolve()
+with open(path, 'r') as fp:
     first_commands = fp.readline().split(',')
     grid = [[0]]
     current_x = 0
