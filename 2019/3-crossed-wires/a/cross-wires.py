@@ -18,12 +18,7 @@
 # Would be O(n^2) as you check the whole list of the first wire
 # for each edge in the second wire
 
-from typing import List
 from pathlib import Path
-
-
-def pretty_print(grid: List[List[int]]):
-    print('\n'.join(' '.join([str(cell) for cell in row]) for row in grid))
 
 # test1 distance 6
 # test2 distance 159
@@ -37,9 +32,6 @@ with open(path, 'r') as fp:
     grid = {}
     current_x = 0
     current_y = 0
-    # Grid limits
-    right_edge = 0
-    top_edge = 0
     # Draw first circuit
     print('Drawing first circuit:')
     for command in first_commands:
@@ -63,7 +55,6 @@ with open(path, 'r') as fp:
             for y in range(current_y, current_y - distance - 1, -1):
                 grid["%d,%d" % (current_x, y)] = 1
             current_y = current_y - distance
-        # pretty_print(grid)
 
     # Draw second circuit
     second_commands = fp.readline().split(',')
@@ -72,8 +63,8 @@ with open(path, 'r') as fp:
     min_dist = 10000000
     min_coords = [0, 0]
 
-    # Reset the central port so we don't mark it as a crossover
-    grid['0,0'] = 8
+    # Remove the central port so we don't mark it as a crossover
+    grid.pop('0,0')
 
     print('\nDrawing second circuit:')
     # At each step check for overlaps and keep track of the closest overlap seen so far
@@ -84,10 +75,7 @@ with open(path, 'r') as fp:
         # print(command)
         if direction == 'L':
             for x in range(current_x, current_x - distance - 1, -1):
-                if "%d,%d" % (x, current_y) not in grid:
-                    grid["%d,%d" % (x, current_y)] = 2
-                elif grid["%d,%d" % (x, current_y)] == 1:
-                    grid["%d,%d" % (x, current_y)] = 3
+                if "%d,%d" % (x, current_y) in grid:
                     dist_to_home = abs(x) + abs(current_y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
@@ -95,10 +83,7 @@ with open(path, 'r') as fp:
             current_x = current_x - distance
         elif direction == 'R':
             for x in range(current_x, current_x + distance + 1):
-                if "%d,%d" % (x, current_y) not in grid:
-                    grid["%d,%d" % (x, current_y)] = 2
-                elif grid["%d,%d" % (x, current_y)] == 1:
-                    grid["%d,%d" % (x, current_y)] = 3
+                if "%d,%d" % (x, current_y) in grid:
                     dist_to_home = abs(x) + abs(current_y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
@@ -106,10 +91,7 @@ with open(path, 'r') as fp:
             current_x = current_x + distance
         elif direction == 'U':
             for y in range(current_y, current_y + distance + 1):
-                if "%d,%d" % (current_x, y) not in grid:
-                    grid["%d,%d" % (current_x, y)] = 2
-                elif grid["%d,%d" % (current_x, y)] == 1:
-                    grid["%d,%d" % (current_x, y)] = 3
+                if "%d,%d" % (current_x, y) in grid:
                     dist_to_home = abs(current_x) + abs(y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
@@ -117,17 +99,12 @@ with open(path, 'r') as fp:
             current_y = current_y + distance
         elif direction == 'D':
             for y in range(current_y, current_y - distance - 1, -1):
-                if "%d,%d" % (current_x, y) not in grid:
-                    grid["%d,%d" % (current_x, y)] = 2
-                elif grid["%d,%d" % (current_x, y)] == 1:
-                    grid["%d,%d" % (current_x, y)] = 3
+                if "%d,%d" % (current_x, y) in grid:
                     dist_to_home = abs(current_x) + abs(y)
                     if dist_to_home < min_dist:
                         min_dist = dist_to_home
                         min_coords = [current_x, y]
             current_y = current_y - distance
-        # pretty_print(grid)
 
     print('Crossover at (%d, %d) distance of %d' %
           (min_coords[0], min_coords[1], min_dist))
-    # How to ignore the (0,0) crossover?
