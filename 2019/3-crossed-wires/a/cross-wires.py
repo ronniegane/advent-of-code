@@ -28,6 +28,7 @@ def pretty_print(grid: List[List[int]]):
 # test1 distance 6
 # test2 distance 159
 # test3 distance 135
+# input Crossover at (-141, -1054) distance of 1195
 
 
 path = (Path(__file__).parent / ".././input").resolve()
@@ -47,7 +48,7 @@ with open(path, 'r') as fp:
         # print('Current position is (%d, %d)' % (current_x, current_y))
         # print(command)
         if direction == 'L':
-            for x in range(current_x-distance, current_x):
+            for x in range(current_x, current_x - distance - 1, -1):
                 grid["%d,%d" % (x, current_y)] = 1
             current_x = current_x - distance
         elif direction == 'R':
@@ -59,7 +60,7 @@ with open(path, 'r') as fp:
                 grid["%d,%d" % (current_x, y)] = 1
             current_y = current_y + distance
         elif direction == 'D':
-            for y in range(current_y - distance, current_y):
+            for y in range(current_y, current_y - distance - 1, -1):
                 grid["%d,%d" % (current_x, y)] = 1
             current_y = current_y - distance
         # pretty_print(grid)
@@ -82,7 +83,7 @@ with open(path, 'r') as fp:
         # print('Current position is (%d, %d)' % (current_x, current_y))
         # print(command)
         if direction == 'L':
-            for x in range(current_x-distance, current_x):
+            for x in range(current_x, current_x - distance - 1, -1):
                 if "%d,%d" % (x, current_y) not in grid:
                     grid["%d,%d" % (x, current_y)] = 2
                 elif grid["%d,%d" % (x, current_y)] == 1:
@@ -115,7 +116,7 @@ with open(path, 'r') as fp:
                         min_coords = [current_x, y]
             current_y = current_y + distance
         elif direction == 'D':
-            for y in range(current_y - distance, current_y):
+            for y in range(current_y, current_y - distance - 1, -1):
                 if "%d,%d" % (current_x, y) not in grid:
                     grid["%d,%d" % (current_x, y)] = 2
                 elif grid["%d,%d" % (current_x, y)] == 1:
