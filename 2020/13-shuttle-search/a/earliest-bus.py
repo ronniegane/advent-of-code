@@ -8,12 +8,18 @@ using integer division
 so its earliest arrival after time y is
 (y // x) * x + x
 we can just find these times and get the earliest
+
+In fact the wait is
+(time between buses) - (time from last bus to target time)
+x - (y % x)
+there is a special case where y % x = 0 which we have to account for
 """
 
 from pathlib import Path
 import math
 
 # Test: should take bus 59 waiting 5 minutes  = 295
+# Input: Bus ID: 601 Wait: 8 = 4808
 path = (Path(__file__).parent / '../input').resolve()
 fp = open(path, 'r')
 # First line is the earliest time _we_ can leave
@@ -27,12 +33,12 @@ print(buses)
 best_wait = math.inf  # Positive infinity
 best_bus = 0
 for bus_id in buses:
-    arrival = (time // bus_id) * bus_id
-    if arrival < time:  # allow for special case where bus arrives exactly on time
-        arrival = arrival + bus_id
+    wait = bus_id - (time % bus_id)
 
-    wait = arrival - time
-    # Probably could just have a formula for this
+    if wait == bus_id:
+        # Bus arrived exactly on time
+        wait = 0
+
     if wait < best_wait:
         best_wait = wait
         best_bus = bus_id
