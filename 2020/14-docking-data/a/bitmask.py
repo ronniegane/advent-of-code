@@ -11,8 +11,8 @@ Recording values in memory: just use a dict?
 from pathlib import Path
 
 # Test: should result in sum of 165
-# Input:
-path = (Path(__file__).parent / '../input').resolve()
+# Input: currently guessing 375776035880555 which is too high
+path = (Path(__file__).parent / '../test2').resolve()
 with open(path, 'r') as fp:
     mask = ''
     one_mask = 0b0
@@ -31,14 +31,17 @@ with open(path, 'r') as fp:
                 elif mask[-i-1] == '1':
                     one_mask += 2**i
             zero_mask = (2**len(mask) - 1) - zero_mask  # invert the zero mask
+            print('0b'+mask)
+            print(bin(one_mask))
+            print(bin(zero_mask))
         elif line.startswith('mem'):
             mem, val = line.split(' =')
             val = int(val)
-            # print('original: ', bin(val))
+            print('original: ', bin(val))
             val = val & zero_mask
-            # print('after zero mask: ', bin(val))
+            print('after zero mask: ', bin(val))
             val = val | one_mask
-            # print('after one mask: ', bin(val))
+            print('after one mask: ', bin(val))
             index = int(mem[4:-1])  # format mem[1234]
             memory[index] = val
             # print('put value %d at index %d' % (val, index))
