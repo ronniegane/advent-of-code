@@ -23,7 +23,7 @@ with open(
     print(fish_counts)
 
     # Age fish
-    days_to_simulate = 80
+    days_to_simulate = 256
     for day in range(1, days_to_simulate + 1):
         new_fish_counts = {x: 0 for x in range(0, 9)}
         for key, value in fish_counts.items():
